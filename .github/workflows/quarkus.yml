@@ -1,9 +1,7 @@
 name: Quarkus CI
 on:
   push:
-    branches: ["*"]
   pull_request:
-    branches: ["*"]
 
 jobs:
   test:
@@ -16,6 +14,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+          cache: 'maven'
       - name: Run Maven tests
         run: ./mvnw test
         working-directory: quarkus-cloud-native-workload
