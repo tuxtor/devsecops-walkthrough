@@ -1,4 +1,4 @@
-name: quarkus.yml
+name: Quarkus CI
 on:
   push:
     branches: ["*"]
