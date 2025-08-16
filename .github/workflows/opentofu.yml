@@ -26,9 +26,12 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - name: Tofu Init
         run: tofu init
+        working-directory: aws-infra
       - name: Tofu Plan
         run: tofu plan
+        working-directory: aws-infra
       # Uncomment the following to enable automatic apply on push to main
       # - name: Tofu Apply
       #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       #   run: tofu apply -auto-approve
+      #   working-directory: aws-infra
