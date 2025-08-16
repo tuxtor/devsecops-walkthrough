@@ -1,0 +1,34 @@
+name: OpenTofu CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  opentofu:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: us-east-1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: latest
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Tofu Init
+        run: tofu init
+      - name: Tofu Plan
+        run: tofu plan
+      # Uncomment the following to enable automatic apply on push to main
+      # - name: Tofu Apply
+      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      #   run: tofu apply -auto-approve
