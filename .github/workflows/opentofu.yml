@@ -2,9 +2,9 @@ name: OpenTofu CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "*" ]
 
 jobs:
   opentofu:
@@ -32,8 +32,7 @@ jobs:
       - name: Tofu Plan
         run: tofu plan
         working-directory: aws-infra
-      # Uncomment the following to enable automatic apply on push to main
-      # - name: Tofu Apply
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: tofu apply -auto-approve
-      #   working-directory: aws-infra
+      - name: Tofu Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: tofu apply -auto-approve
+        working-directory: aws-infra

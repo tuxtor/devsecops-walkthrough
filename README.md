@@ -1,0 +1,1 @@
+[![OpenTofu CI](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu.yml/badge.svg)](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu.yml)
