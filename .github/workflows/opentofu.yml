@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: us-east-1
+      TF_VAR_aws_state_bucket: ${{ secrets.TF_VAR_AWS_STATE_BUCKET }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
