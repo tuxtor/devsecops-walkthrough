@@ -8,3 +8,9 @@ variable "aws_state_bucket" {
   type        = string
   description = "Name of the S3 bucket to save tofu status."
 }
+
+variable "aws_cluster_name" {
+  type        = string
+  description = "Name of the EKS cluster."
+  default     = "vorozco-tofu-cluster"
+}
