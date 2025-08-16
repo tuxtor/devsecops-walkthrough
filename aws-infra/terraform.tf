@@ -6,4 +6,10 @@ terraform {
     }
   }
   required_version = ">= 1.0.0"
+
+  backend "s3" {
+    bucket = var.aws_state_bucket
+    key    = "terraform.tfstate"
+    region = var.aws_region
+  }
 }
