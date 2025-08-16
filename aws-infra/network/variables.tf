@@ -13,9 +13,10 @@ variable "private_subnet_cidrs" {
   type        = list(string)
 }
 
-variable "aws_region" {
-  description = "AWS region to deploy resources"
-  type        = string
+variable "name" {
+    description = "Name tag for the VPC and subnets"
+    type        = string
+    default     = "vorozco-vpc"
 }
 
 variable "tags" {
