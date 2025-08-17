@@ -16,6 +16,7 @@ This repository demonstrates best practices in DevSecOps, cloud-native architect
 - Prefer statically typed languages and modern frameworks.
 - Use environment variables for configuration.
 - Containerize workloads using Docker.
+- When adding new Terraform objects, avoid the use of this. Instead use a generic name -e.g. "aws_ecr_repository" "ecr_repository" -
 
 ## CI/CD & Quality
 - All code must pass automated tests before merging.

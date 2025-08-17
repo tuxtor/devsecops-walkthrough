@@ -6,6 +6,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      AWS_REGION: us-east-1
+      DOCKER_REGISTRY: ${ vars.DOCKER_REGISTRY }
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,4 +20,16 @@ jobs:
           cache: 'maven'
       - name: Run Maven tests
         run: ./mvnw test
+        working-directory: quarkus-cloud-native-workload
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Docker build
+        run: ./mvnw k8s:build
+        working-directory: quarkus-cloud-native-workload
+      - name: Docker push
+        run: ./mvnw k8s:push
         working-directory: quarkus-cloud-native-workload

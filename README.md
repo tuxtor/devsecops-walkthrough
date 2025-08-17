@@ -23,6 +23,14 @@ The purpose of this repository is to demonstrate my current knowledge of the fol
 - Dependabot for dependency management
 - Copilot for PR reviews
 
+## Cheat sheet for demos
+
+Configure kubectl with EKS cluster:
+
+```bash
+aws eks --region <<us-east-1>> update-kubeconfig --name <<vorozco-eks>>
+```
+
 ## Infra status
 
 [![OpenTofu CI](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu.yml/badge.svg)](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu.yml)
