@@ -26,3 +26,9 @@ variable "acm_certificate_arn" {
   type        = string
   description = "ARN of the ACM certificate for the cluster."
 }
+
+variable "infra_bootstrap" {
+  type        = bool
+  description = "Flag to indicate if the infrastructure bootstrap should be performed."
+  default     = false
+}

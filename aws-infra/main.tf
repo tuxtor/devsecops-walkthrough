@@ -3,6 +3,7 @@ locals {
   global_tags = {
     Project = local.project_name
   }
+  bootstraping = true
 }
 
 module "network" {
@@ -33,9 +34,10 @@ module "helm" {
   region                      = var.aws_region
   vpc_id                      = module.network.vpc_id
   acm_certificate_arn         = module.route53.acm_certificate_arn
+  infra_bootstrap             = var.infra_bootstrap
 }
 
-module "ecr-quarkus-cloud-native-workload" {
+module "ecr-quarkus" {
   source          = "./ecr"
   repository_name = "quarkus-cloud-native-workload"
   scan_on_push    = false
@@ -43,9 +45,10 @@ module "ecr-quarkus-cloud-native-workload" {
 }
 
 module "route53" {
-  source       = "./route53"
-  subdomain    = var.aws_hosted_zone_subdomain
-  tags         = local.global_tags
-  alb_dns_name = module.helm.alb_dns_name
-  alb_zone_id  = module.helm.alb_zone_id
+  source          = "./route53"
+  subdomain       = var.aws_hosted_zone_subdomain
+  tags            = local.global_tags
+  alb_dns_name    = module.helm.alb_dns_name
+  alb_zone_id     = module.helm.alb_zone_id
+  infra_bootstrap = var.infra_bootstrap
 }

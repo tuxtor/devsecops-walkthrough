@@ -36,4 +36,5 @@ resource "aws_route53_record" "alias_route53_record" {
     zone_id                = var.alb_zone_id
     evaluate_target_health = true
   }
+  count = var.infra_bootstrap ? 0 : 1
 }

@@ -22,3 +22,9 @@ variable "aws_hosted_zone_subdomain" {
   description = "Subdomain for the Route 53 hosted zone."
   default     = "awsk8s.vorozco.com"
 }
+
+variable "infra_bootstrap" {
+  type        = bool
+  description = "Flag to indicate if the infrastructure bootstrap should be performed."
+  default     = false
+}
