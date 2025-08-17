@@ -1,5 +1,6 @@
 resource "aws_ecr_repository" "ecr_repository" {
-  name = var.repository_name
+  name         = var.repository_name
+  force_delete = true
   image_scanning_configuration {
     scan_on_push = var.scan_on_push
   }
@@ -25,12 +26,12 @@ resource "aws_ecr_lifecycle_policy" "ecr_lifecycle_policy" {
       {
         rulePriority = 1
         description  = "Keep last 5 images"
-        selection    = {
-          tagStatus = "any"
-          countType = "imageCountMoreThan"
+        selection = {
+          tagStatus   = "any"
+          countType   = "imageCountMoreThan"
           countNumber = 5
         }
-        action      = {
+        action = {
           type = "expire"
         }
       }
