@@ -11,8 +11,8 @@ module "network" {
   public_subnet_cidrs  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   private_subnet_cidrs = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
   name                 = "vorozco-vpc"
-
-  tags = local.global_tags
+  cluster-name         = var.aws_cluster_name # Do not depend on eks value to avoid circular dependency
+  tags                 = local.global_tags
 }
 
 module "eks" {
@@ -30,6 +30,8 @@ module "helm" {
   cluster_certificate = module.eks.kubeconfig-certificate-authority-data
   cluster_endpoint    = module.eks.endpoint
   cluster_name        = module.eks.name
+  region              = var.aws_region
+  vpc_id              = module.network.vpc_id
 }
 
 module "ecr-quarkus-cloud-native-workload" {

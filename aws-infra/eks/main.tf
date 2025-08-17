@@ -27,7 +27,7 @@ resource "aws_eks_node_group" "private_nodes" {
     min_size     = 2
   }
   instance_types = ["t3.small"]
-
+  disk_size = 20
   depends_on = [
     aws_iam_role_policy_attachment.eks_nodes_AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.eks_nodes_AmazonEC2ContainerRegistryReadOnly,
