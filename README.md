@@ -33,8 +33,8 @@ aws eks --region <<us-east-1>> update-kubeconfig --name <<vorozco-eks>>
 
 ## Infra status
 
-[![OpenTofu CI](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu.yml/badge.svg)](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu.yml)
+[![OpenTofu CI](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu-deployment.yml/badge.svg)](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu-deployment.yml)
 
 ## Quarkus Cloud Native Workload
 
-[![Quarkus CI](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/quarkus.yml/badge.svg)](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/quarkus.yml)
+[![Quarkus CI](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/quarkus-deployment.yml/badge.svg)](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/quarkus-deployment.yml)

@@ -8,6 +8,11 @@ variable "alb_dns_name" {
   type        = string
 }
 
+variable "alb_zone_id" {
+  description = "Zone ID for the Application Load Balancer"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to apply to the hosted zone"
   type        = map(string)

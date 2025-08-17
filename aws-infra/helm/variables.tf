@@ -16,6 +16,12 @@ variable "alb_service_account_iam_arn" {
   description = "ARN of the IAM role for the AWS Load Balancer Controller service account."
 }
 
+variable "alb_name" {
+  type        = string
+  description = "Name of the Application Load Balancer."
+  default     = "alb-ingress-nginx-controller"
+}
+
 variable "acm_certificate_arn" {
   type        = string
   description = "ARN of the ACM certificate for the cluster."

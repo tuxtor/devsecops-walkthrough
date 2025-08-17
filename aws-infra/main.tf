@@ -25,7 +25,7 @@ module "eks" {
 }
 
 module "helm" {
-  source = "./helm"
+  source                      = "./helm"
   cluster_certificate         = module.eks.kubeconfig-certificate-authority-data
   cluster_endpoint            = module.eks.endpoint
   cluster_name                = module.eks.name
@@ -43,7 +43,9 @@ module "ecr-quarkus-cloud-native-workload" {
 }
 
 module "route53" {
-  source    = "./route53"
-  subdomain = var.aws_hosted_zone_subdomain
-  tags      = local.global_tags
+  source       = "./route53"
+  subdomain    = var.aws_hosted_zone_subdomain
+  tags         = local.global_tags
+  alb_dns_name = module.helm.alb_dns_name
+  alb_zone_id  = module.helm.alb_zone_id
 }

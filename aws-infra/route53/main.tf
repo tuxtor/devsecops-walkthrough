@@ -25,3 +25,15 @@ resource "aws_route53_record" "example" {
   type            = each.value.type
   zone_id         = data.aws_route53_zone.hosted_zone.zone_id
 }
+
+resource "aws_route53_record" "alias_route53_record" {
+  zone_id = data.aws_route53_zone.hosted_zone.zone_id # Replace with your zone ID
+  name    = var.subdomain # Replace with your name/domain/subdomain
+  type    = "A"
+
+  alias {
+    name                   = var.alb_dns_name
+    zone_id                = var.alb_zone_id
+    evaluate_target_health = true
+  }
+}
