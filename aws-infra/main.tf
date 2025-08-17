@@ -35,7 +35,7 @@ module "helm" {
 module "ecr-quarkus-cloud-native-workload" {
   source          = "./ecr"
   repository_name = "quarkus-cloud-native-workload"
-  scan_on_push    = true
+  scan_on_push    = false
   tags            = local.global_tags
 }
 

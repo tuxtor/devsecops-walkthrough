@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: us-east-1
-      DOCKER_REGISTRY: ${ vars.DOCKER_REGISTRY }
+      DOCKER_REGISTRY: ${{ vars.DOCKER_REGISTRY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
