@@ -1,3 +1,5 @@
+# Globally overridable variables for AWS infrastructure
+
 variable "aws_region" {
   type        = string
   description = "AWS region to use for resources."
@@ -12,5 +14,11 @@ variable "aws_state_bucket" {
 variable "aws_cluster_name" {
   type        = string
   description = "Name of the EKS cluster."
-  default     = "vorozco-tofu-cluster"
+  default     = "vorozco-eks"
+}
+
+variable "aws_hosted_zone_subdomain" {
+  type        = string
+  description = "Subdomain for the Route 53 hosted zone."
+  default     = "awsk8s.vorozco.com"
 }
