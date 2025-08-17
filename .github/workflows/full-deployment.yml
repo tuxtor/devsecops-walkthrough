@@ -33,6 +33,9 @@ jobs:
       - name: Tofu Init
         run: tofu init
         working-directory: aws-infra
+      - name: Tofu Validate
+        run: tofu validate
+        working-directory: aws-infra
       - name: Tofu Plan
         run: tofu plan
         working-directory: aws-infra
@@ -41,6 +44,7 @@ jobs:
         run: tofu apply -auto-approve
         working-directory: aws-infra
   quarkus:
+    needs: opentofu
     runs-on: ubuntu-latest
     env:
       AWS_REGION: us-east-1
@@ -64,11 +68,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
       - name: Docker build
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: ./mvnw k8s:build
         working-directory: quarkus-cloud-native-workload
       - name: Run Trivy security scan (Docker)
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: "image"
