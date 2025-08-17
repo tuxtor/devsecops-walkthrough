@@ -16,3 +16,25 @@ output "repository_arn" {
   value       = aws_ecr_repository.ecr_repository.arn
 }
 
+//Policy to evict all but the last 10 images in the repository
+resource "aws_ecr_lifecycle_policy" "ecr_lifecycle_policy" {
+  repository = aws_ecr_repository.ecr_repository.name
+
+  policy = jsonencode({
+    rules = [
+      {
+        rulePriority = 1
+        description  = "Keep last 5 images"
+        selection    = {
+          tagStatus = "any"
+          countType = "imageCountMoreThan"
+          countNumber = 5
+        }
+        action      = {
+          type = "expire"
+        }
+      }
+    ]
+  })
+}
+
