@@ -22,6 +22,9 @@ resource "aws_subnet" "public" {
     var.tags,
     {
       Name = "PublicSubnet-${var.name}-${count.index}"
+      "kubernetes.io/cluster/${var.cluster-name}" = "shared"
+      "kubernetes.io/role/elb" = "1"
+      "kubernetes.io/role/alb-ingress" = "1"
     }
   )
 }
@@ -36,10 +39,6 @@ resource "aws_subnet" "private" {
     var.tags,
     {
       Name = "PrivateSubnet-${var.name}-${count.index}"
-      "kubernetes.io/cluster/${var.cluster-name}" = "shared"
-      "kubernetes.io/role/internal-elb" = "1"
-      "kubernetes.io/role/elb" = "1"
-      "kubernetes.io/role/alb-ingress" = "1"
     }
   )
 }

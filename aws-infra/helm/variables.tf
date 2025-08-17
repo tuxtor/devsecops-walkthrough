@@ -10,3 +10,13 @@ variable "vpc_id" {
   type        = string
   description = "ID of the VPC where the EKS cluster is deployed."
 }
+
+variable "alb_service_account_iam_arn" {
+  type        = string
+  description = "ARN of the IAM role for the AWS Load Balancer Controller service account."
+}
+
+variable "acm_certificate_arn" {
+  type        = string
+  description = "ARN of the ACM certificate for the cluster."
+}

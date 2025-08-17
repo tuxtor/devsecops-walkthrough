@@ -26,12 +26,13 @@ module "eks" {
 
 module "helm" {
   source = "./helm"
-
-  cluster_certificate = module.eks.kubeconfig-certificate-authority-data
-  cluster_endpoint    = module.eks.endpoint
-  cluster_name        = module.eks.name
-  region              = var.aws_region
-  vpc_id              = module.network.vpc_id
+  cluster_certificate         = module.eks.kubeconfig-certificate-authority-data
+  cluster_endpoint            = module.eks.endpoint
+  cluster_name                = module.eks.name
+  alb_service_account_iam_arn = module.eks.alb_service_account_iam_arn
+  region                      = var.aws_region
+  vpc_id                      = module.network.vpc_id
+  acm_certificate_arn         = module.route53.acm_certificate_arn
 }
 
 module "ecr-quarkus-cloud-native-workload" {
@@ -44,6 +45,5 @@ module "ecr-quarkus-cloud-native-workload" {
 module "route53" {
   source    = "./route53"
   subdomain = var.aws_hosted_zone_subdomain
-
-  tags = local.global_tags
+  tags      = local.global_tags
 }
