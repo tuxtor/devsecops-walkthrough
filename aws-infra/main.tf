@@ -9,3 +9,14 @@ module "network" {
     Project = "tofu"
   }
 }
+
+module "eks" {
+  source              = "./eks"
+  cluster_name        = "vorozco-eks"
+  eks_version         = "1.33"
+  private_subnet_ids  = module.network.private_subnet_ids
+
+  tags = {
+    Project = "tofu"
+  }
+}
