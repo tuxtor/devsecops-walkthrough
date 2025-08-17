@@ -51,6 +51,6 @@ jobs:
         run: tofu plan -out=aws.tfplan
         working-directory: aws-infra
       - name: Tofu Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: tofu apply -auto-approve aws.tfplan
         working-directory: aws-infra
