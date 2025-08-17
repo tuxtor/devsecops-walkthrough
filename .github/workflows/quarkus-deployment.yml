@@ -1,8 +1,9 @@
 name: Quarkus CD
 on:
   workflow_run:
-    workflows:
-      - OpenTofu CD
+    workflows: ["OpenTofu CD"]
+    types:
+      - completed
   workflow_dispatch:
 jobs:
   quarkus:
