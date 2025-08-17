@@ -12,6 +12,9 @@ on:
         description: 'Bootstrap infrastructure'
         required: true
         default: 'false'
+        options:
+          - 'true'
+          - 'false'
 jobs:
   opentofu:
     runs-on: ubuntu-latest
