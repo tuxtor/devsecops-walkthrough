@@ -7,12 +7,18 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      infra_bootstrap:
+        description: 'Bootstrap infrastructure'
+        required: true
+        default: 'false'
 jobs:
   opentofu:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: us-east-1
       TF_VAR_aws_state_bucket: ${{ secrets.TF_VAR_AWS_STATE_BUCKET }}
+      TF_VAR_infra_bootstrap: ${{ github.event.inputs.infra_bootstrap || 'false' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
