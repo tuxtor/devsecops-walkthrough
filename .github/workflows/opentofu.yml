@@ -1,9 +1,7 @@
 name: OpenTofu CI
-
 on:
   push:
   pull_request:
-
 jobs:
   opentofu:
     runs-on: ubuntu-latest

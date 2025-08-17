@@ -1,8 +1,9 @@
 name: Quarkus CI
 on:
-  push:
-  pull_request:
-
+  workflow_run:
+    workflows: ["OpenTofu CI"]
+    types:
+      - completed
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -34,7 +35,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: "image"
-          image-ref: ${{ env.DOCKER_REGISTRY }}/quarkus-cloud-native-workload:latest
+          image-ref: quarkus-cloud-native-workload:latest
           format: "table"
           exit-code: "0"
           severity: 'CRITICAL,HIGH'
