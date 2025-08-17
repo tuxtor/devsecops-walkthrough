@@ -1,7 +1,6 @@
 name: OpenTofu Destroy
 on:
   workflow_dispatch:
-
 jobs:
   destroy:
     runs-on: ubuntu-latest
@@ -25,3 +24,4 @@ jobs:
       - name: Tofu Destroy
         run: tofu destroy -auto-approve
         working-directory: aws-infra
+        timeout-minutes: 60
