@@ -1,7 +1,11 @@
 name: Opentofu and Quarkus Full Deployment
 on:
   push:
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
 jobs:
   opentofu:
     runs-on: ubuntu-latest
@@ -37,11 +41,11 @@ jobs:
         run: tofu validate
         working-directory: aws-infra
       - name: Tofu Plan
-        run: tofu plan
+        run: tofu plan -out=aws.tfplan
         working-directory: aws-infra
       - name: Tofu Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: tofu apply -auto-approve
+        run: tofu apply -auto-approve aws.tfplan
         working-directory: aws-infra
   quarkus:
     needs: opentofu
