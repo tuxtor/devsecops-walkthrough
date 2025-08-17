@@ -5,19 +5,6 @@ on:
   pull_request:
 
 jobs:
-  trivy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Run Trivy security scan (IaC)
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          scan-type: "config"
-          scan-ref: aws-infra
-          format: "sarif"
-          exit-code: "0"
-          severity: 'CRITICAL,HIGH'
   opentofu:
     runs-on: ubuntu-latest
     env:
@@ -37,6 +24,14 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+      - name: Run Trivy security scan (IaC)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: "config"
+          scan-ref: aws-infra
+          format: "table"
+          exit-code: "0"
+          severity: 'CRITICAL,HIGH'
       - name: Tofu Init
         run: tofu init
         working-directory: aws-infra

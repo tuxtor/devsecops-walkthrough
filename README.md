@@ -2,10 +2,13 @@
 
 The purpose of this repository is to demonstrate my current knowledge of the following tools, practices, and architectural principles:
 
-## Architecture Principles
+## Principles and practices
 - [12 Factor App: Cloud Native Principles](https://12factor.net/)
-- CI/CD with GitHub Actions
-- Static code analysis during pipelines ([SpotBugs](https://spotbugs.github.io/) is recommended for Java projects)
+- DevSecOps
+- Infrastructure as Code (IaC)
+- Automated testing
+- Static code analysis
+- Continuous Integration and Continuous Deployment (CI/CD)
 
 ## Tools
 - OpenTofu (Terraform)
@@ -13,11 +16,12 @@ The purpose of this repository is to demonstrate my current knowledge of the fol
 - Quarkus
 - AWS
 - Docker (used for containerization in Quarkus workloads)
-
-## Additional Practices
-- Automated testing with Maven
-- Infrastructure as Code (IaC)
-- GitHub Actions workflow badges for infra and application
+- GitHub Actions
+- Static code analysis
+  - (Code) [SpotBugs](https://spotbugs.github.io/)
+  - (Pipelines) [Trivy](https://trivy.dev/latest/)
+- Dependabot for dependency management
+- Copilot for PR reviews
 
 ## Infra status
 
