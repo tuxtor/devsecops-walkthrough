@@ -1,0 +1,4 @@
+name: opentofu-destroy.yml
+on:
+
+jobs:
