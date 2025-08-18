@@ -30,8 +30,8 @@ jobs:
           tofu destroy -target=module.helm.kubernetes_manifest.ingress-nginx-alb -auto-approve
           tofu destroy -target=module.helm.helm_release.ingress-nginx -auto-approve
           tofu destroy -target=module.helm.helm_release.aws-load-balancer-controller -auto-approve
-          tofu destroy -target=module.helm.helm_release.kubernetes_service_account -auto-approve
-        working-directory: aws-infra
+          tofu destroy -target=module.helm.kubernetes_service_account.aws-load-balancer-controller -auto-approve
+          tofu destroy -target=module.helm.helm_release.metrics-server -auto-approve
       - name: Tofu Destroy
         run: tofu destroy -auto-approve
         working-directory: aws-infra
