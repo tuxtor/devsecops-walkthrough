@@ -1,5 +1,7 @@
 # DevSecOps Walkthrough
 
+[![Opentofu & Quarkus](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/full-deployment.yml/badge.svg)](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/full-deployment.yml)
+
 ![overview.png](overview.png)
 
 This repository is a comprehensive showcase of modern DevSecOps, cloud-native architecture, and CI/CD. Designed to demonstrate expertise in building cloud solutions on AWS. It features a fully automated infrastructure-as-code approach using OpenTofu (Terraform), with modular definitions for networking, compute, container orchestration (EKS), registry (ECR), DNS (Route53), and IAM.
@@ -45,10 +47,3 @@ Smoke test after deployment of the Quarkus workload:
 ```bash
 https://awsk8s.vorozco.com/quarkus-cloud-native-workload/
 ```
-## Infra status
-
-[![OpenTofu CI](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu-deployment.yml/badge.svg)](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu-deployment.yml)
-
-## Quarkus Cloud Native Workload
-
-[![Quarkus CI](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/quarkus-deployment.yml/badge.svg)](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/quarkus-deployment.yml)
