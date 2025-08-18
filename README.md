@@ -47,3 +47,7 @@ Smoke test after deployment of the Quarkus workload:
 ```bash
 https://awsk8s.vorozco.com/quarkus-cloud-native-workload/
 ```
+
+## Slides presentation (in spanish)
+
+[View Slides](https://github.com/tuxtor/slides/blob/master/cloud-native-devsecops/main.pdf)
