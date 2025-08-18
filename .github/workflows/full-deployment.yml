@@ -1,4 +1,4 @@
-name: OpenTofu CD
+name: OpenTofu & Quarkus CD
 on:
   push:
     branches:
@@ -90,15 +90,15 @@ jobs:
           exit-code: "0"
           severity: 'CRITICAL,HIGH'
       - name: Docker push
-        if: github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event == 'push'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: ./mvnw k8s:push
         working-directory: quarkus-cloud-native-workload
       - name: Create and save kubernetes plan
-        if: github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event == 'push'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: ./mvnw k8s:resource
         working-directory: quarkus-cloud-native-workload
       - name: Upload Kubernetes manifest
-        if: github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event == 'push'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         uses: actions/upload-artifact@v4
         with:
           name: kubernetes-manifest
@@ -106,7 +106,7 @@ jobs:
   kubectl-deploy:
     needs: quarkus
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event == 'push'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     env:
       AWS_REGION: us-east-1
       DOCKER_REGISTRY: ${{ vars.DOCKER_REGISTRY }}
