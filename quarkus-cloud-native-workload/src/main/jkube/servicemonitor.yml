@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: ${project.artifactId}
   labels:
-    release: kube-prometheus-stack #Really important
+    release: kube-prometheus-stack # Required for kube-prometheus-stack to discover this ServiceMonitor
 spec:
   endpoints:
     - port: http
