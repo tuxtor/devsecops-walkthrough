@@ -9,7 +9,7 @@ data "aws_route53_zone" "hosted_zone" {
   name = var.subdomain
 }
 
-resource "aws_route53_record" "example" {
+resource "aws_route53_record" "acm_validation" {
   for_each = {
     for dvo in aws_acm_certificate.acm_certificate.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
@@ -26,9 +26,9 @@ resource "aws_route53_record" "example" {
   zone_id         = data.aws_route53_zone.hosted_zone.zone_id
 }
 
-resource "aws_route53_record" "alias_route53_record" {
-  zone_id = data.aws_route53_zone.hosted_zone.zone_id # Replace with your zone ID
-  name    = var.subdomain # Replace with your name/domain/subdomain
+resource "aws_route53_record" "alb_alias_route53_record" {
+  zone_id = data.aws_route53_zone.hosted_zone.zone_id
+  name    = var.subdomain
   type    = "A"
 
   alias {

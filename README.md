@@ -41,6 +41,10 @@ Configure kubectl with EKS cluster:
 aws eks --region <<us-east-1>> update-kubeconfig --name <<vorozco-eks>>
 ```
 
+Smoke test after deployment of the Quarkus workload:
+```bash
+https://awsk8s.vorozco.com/quarkus-cloud-native-workload/
+```
 ## Infra status
 
 [![OpenTofu CI](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu-deployment.yml/badge.svg)](https://github.com/tuxtor/devsecops-walkthrough/actions/workflows/opentofu-deployment.yml)
