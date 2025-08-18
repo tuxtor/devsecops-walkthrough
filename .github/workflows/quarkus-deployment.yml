@@ -21,7 +21,7 @@ jobs:
           java-version: '21'
           cache: 'maven'
       - name: Run Maven tests
-        run: ./mvnw verify
+        run: ./mvnw verify spotbugs:check
         working-directory: quarkus-cloud-native-workload
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
