@@ -12,7 +12,6 @@ public class GreetingResource {
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
 
-        String doubleBug = doSpotBugsDemo();
         return "Hello from Quarkus REST";
 
     }
