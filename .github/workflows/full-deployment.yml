@@ -1,12 +1,61 @@
-name: Quarkus CD
+name: OpenTofu CD
 on:
-  workflow_run:
-    workflows: ["OpenTofu CD"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
+    inputs:
+      infra_bootstrap:
+        description: 'Bootstrap infrastructure'
+        required: true
+        default: 'false'
 jobs:
+  opentofu:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: us-east-1
+      TF_VAR_aws_state_bucket: ${{ secrets.TF_VAR_AWS_STATE_BUCKET }}
+      TF_VAR_infra_bootstrap: ${{ github.event.inputs.infra_bootstrap || 'false' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: latest
+          tofu_wrapper: false
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Run Trivy security scan (IaC)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: "config"
+          scan-ref: aws-infra
+          format: "table"
+          exit-code: "0"
+          severity: 'CRITICAL,HIGH'
+      - name: Tofu Init
+        run: tofu init
+        working-directory: aws-infra
+      - name: Tofu Validate
+        run: tofu validate
+        working-directory: aws-infra
+      - name: Tofu Plan
+        run: tofu plan -out=aws.tfplan
+        working-directory: aws-infra
+      - name: Tofu Apply
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        run: tofu apply -auto-approve aws.tfplan
+        working-directory: aws-infra
   quarkus:
+    needs: opentofu
     runs-on: ubuntu-latest
     env:
       AWS_REGION: us-east-1
@@ -54,7 +103,6 @@ jobs:
         with:
           name: kubernetes-manifest
           path: quarkus-cloud-native-workload/target/classes/META-INF/jkube/kubernetes.yml
-
   kubectl-deploy:
     needs: quarkus
     runs-on: ubuntu-latest
