@@ -1,0 +1,71 @@
+@startuml VPC
+
+!include <awslib/AWSCommon>
+'region
+!include <awslib/Groups/all.puml>
+!include <awslib/Compute/all.puml>
+!include <awslib/Containers/all.puml>
+!include <awslib/NetworkingContentDelivery/all.puml>
+
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesApi.puml
+!includeurl KubernetesPuml/OSS/KubernetesIng.puml
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+!includeurl KubernetesPuml/OSS/KubernetesDeploy.puml
+!includeurl KubernetesPuml/OSS/KubernetesSvc.puml
+!includeurl KubernetesPuml/OSS/KubernetesRs.puml
+
+!define SPRITESURL https://raw.githubusercontent.com/plantuml-stdlib/gilbarbara-plantuml-sprites/v1.1/sprites
+!includeurl SPRITESURL/github.puml
+!includeurl SPRITESURL/terraform.puml
+!includeurl SPRITESURL/quarkus.puml
+
+rectangle "<$github>\ntuxtor/devsecops-walkthrough" as repo{
+    file "<$terraform>"
+    file "<$quarkus>"
+}
+
+AWSCloudGroup(cloud){
+ Route53(vorozco_zone, "awsk8s.vorozco.com", "Hosted Zone for outside domain")
+  RegionGroup(region, "us-east-1") {
+    ElasticContainerRegistry(ecr, "quarkus-cloudnative-workload", "Java")
+    VPCGroup(vpc, "vorozco-vpc") {
+      PublicSubnetGroup(pubsubnet, "Public subnets - 3 AZs") {
+            ElasticLoadBalancingApplicationLoadBalancer(alb, "alb-ingress-nginx", "80 -> 443")
+      }
+      PrivateSubnetGroup(privsubnet, "Private subnets - 3 AZs") {
+            GenericOrangeGroup(eks_vorozco, "vorozco-eks"){
+            Namespace_Boundary(nsIngress, "ingress-nginx") {
+                KubernetesIng(ingress_nginx, "Ingress-nginx", "ingress-nginx")
+            }
+            Namespace_Boundary(nsDefault, "default") {
+                KubernetesSvc(svc_quarkus, "quarkus-service", "8080")
+                KubernetesPod(deploy_quarkus_1, "quarkus", "pod1")
+                KubernetesPod(deploy_quarkus_2, "quarkus", "pod2")
+
+            }
+            Namespace_Boundary(nsMetrics, "metrics-server") {
+                            KubernetesDeploy(deploy_metrics, "metrics-server", "metrics-server")
+
+                        }
+              Rel(ingress_nginx, svc_quarkus, "8080")
+                Rel_L(svc_quarkus, deploy_quarkus_1, "8080")
+                Rel_R(svc_quarkus, deploy_quarkus_2, "8080")
+            }
+
+
+      }
+    }
+  }
+}
+
+ecr -> eks_vorozco
+alb -> ingress_nginx : https
+vorozco_zone ...> alb : awsk8s.vorozco.com
+repo --> cloud: GH Actions
+@enduml
