@@ -25,6 +25,7 @@ resource "kubernetes_manifest" "ingress-nginx-alb" {
     }
   }
   depends_on = [helm_release.ingress-nginx]
+  count = var.infra_bootstrap ? 0 : 1
 }
 
 data "aws_lb" "ingress-nginx" {
