@@ -39,7 +39,7 @@ AWSCloudGroup(cloud){
             ElasticLoadBalancingApplicationLoadBalancer(alb, "alb-ingress-nginx", "80 -> 443")
       }
       PrivateSubnetGroup(privsubnet, "Private subnets - 3 AZs") {
-            GenericOrangeGroup(eks_vorozco, "vorozco-eks"){
+            GenericOrangeGroup(eks_vorozco, "vorozco-eks - EC2 Node Group"){
             Namespace_Boundary(nsIngress, "ingress-nginx") {
                 KubernetesIng(ingress_nginx, "Ingress-nginx", "ingress-nginx")
             }

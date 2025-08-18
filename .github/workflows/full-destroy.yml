@@ -24,6 +24,14 @@ jobs:
       - name: Tofu Init
         run: tofu init
         working-directory: aws-infra
+      - name: Tofu Destroy conflicting K8s modules
+        run: |
+          tofu destroy -target=module.route53.aws_route53_record.alb_alias_route53_record -auto-approve
+          tofu destroy -target=module.helm.kubernetes_manifest.ingress-nginx-alb -auto-approve
+          tofu destroy -target=module.helm.helm_release.ingress-nginx -auto-approve
+          tofu destroy -target=module.helm.helm_release.aws-load-balancer-controller -auto-approve
+          tofu destroy -target=module.helm.helm_release.kubernetes_service_account -auto-approve
+        working-directory: aws-infra
       - name: Tofu Destroy
         run: tofu destroy -auto-approve
         working-directory: aws-infra
