@@ -7,7 +7,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: ${project.artifactId}
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 4
   metrics:
     - type: Resource
@@ -15,9 +15,9 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 65
+          averageUtilization: 25
   behavior:
     scaleDown:
-      stabilizationWindowSeconds: 60 # Delay downscaling by 1 min
+      stabilizationWindowSeconds: 10 # Delay downscaling by 1 min
     scaleUp:
-      stabilizationWindowSeconds: 60 # Delay upscaling by 1 min
+      stabilizationWindowSeconds: 10 # Delay upscaling by 1 min
