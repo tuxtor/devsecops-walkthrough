@@ -18,7 +18,6 @@ public class GreetingResource {
 
     private String doSpotBugsDemo(){
         // SpotBugs: DLS_DEAD_LOCAL_STORE - The value assigned to 'result' is never read
-        String hola = "Hola Mundo";
         return "SpotBugs demo";
     }
 }
