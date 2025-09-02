@@ -11,12 +11,12 @@ public class GreetingResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
+        String result = doSpotBugsDemo();
         return "Hello from Quarkus REST";
-
     }
 
     private String doSpotBugsDemo(){
-        // SpotBugs: DLS_DEAD_LOCAL_STORE - The value assigned to 'result' is never read
+        String result = "SpotBugs demo";
         return "SpotBugs demo";
     }
 }
